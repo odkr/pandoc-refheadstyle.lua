@@ -40,15 +40,16 @@ header, but only if the metadata field \fBreference\-section\-title\fP has been
 set to a non\-empty value.
 .sp
 By default, the reference section header will be assigned the custom style
-\(aqBibliography Heading\(aq. But you can change what style is assigned by setting
-the metadata field \fBreference\-header\-style\fP to the name of a style of
-your choice. If the style does not exist, it will be created.
+\(aqBibliography Heading\(aq. But you can define which style should be assigned
+by setting the metadata field \fBreference\-header\-style\fP to the name of
+a style of your choice. If the style does not exist, it will be created.
 .sp
 \fBpandoc\-refheadstyle.lua\fP considers any header the reference section header
 that (1) is one of the last five elements of the document, (2) is a top\-level
 header, (3) has the ID \(aqbibliography\(aq, and (4) has a header text that is
 equal to the value of the metadata field \fBreference\-section\-title\fP (\fIall\fP
-criteria have to be met).
+criteria have to be met). If your reference section header was inserted by
+\fBpandoc\-citeproc\fP, all of these criteria will be met.
 .SH LICENSE
 .sp
 Copyright 2018 Odin Kroeger
@@ -71,10 +72,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 .SH FURTHER INFORMATION
-.INDENT 0.0
-.IP \(bu 2
+.sp
 <\fI\%https://github.com/odkr/pandoc\-refheadstyle.lua\fP>
-.UNINDENT
 .SH SEE ALSO
 .sp
 pandoc(1), pandoc\-citeproc(1)

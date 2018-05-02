@@ -26,15 +26,16 @@ header, but only if the metadata field ``reference-section-title`` has been
 set to a non-empty value.
 
 By default, the reference section header will be assigned the custom style
-'Bibliography Heading'. But you can change what style is assigned by setting
-the metadata field ``reference-header-style`` to the name of a style of
-your choice. If the style does not exist, it will be created.
+'Bibliography Heading'. But you can define which style should be assigned
+by setting the metadata field ``reference-header-style`` to the name of
+a style of your choice. If the style does not exist, it will be created.
 
 ``pandoc-refheadstyle.lua`` considers any header the reference section header
 that (1) is one of the last five elements of the document, (2) is a top-level
 header, (3) has the ID 'bibliography', and (4) has a header text that is
 equal to the value of the metadata field ``reference-section-title`` (*all*
-criteria have to be met).
+criteria have to be met). If your reference section header was inserted by
+``pandoc-citeproc``, all of these criteria will be met.
 
 
 LICENSE
@@ -64,7 +65,7 @@ SOFTWARE.
 FURTHER INFORMATION
 ===================
 
-* <https://github.com/odkr/pandoc-refheadstyle.lua>
+<https://github.com/odkr/pandoc-refheadstyle.lua>
 
 
 SEE ALSO
