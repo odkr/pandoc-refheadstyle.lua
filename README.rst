@@ -13,9 +13,9 @@ your choice. If the style does not exist, it will be created.
 
 See the `manual page <man/pandoc-refheadstyle.lua.rst>`_ for more details.
 
-If you are using `panzer <https://github.com/msprev/panzer>` and need more
+If you are using `panzer <https://github.com/msprev/panzer>`_ and need more
 fine-grained control over when which filter is applied, have a look at
-`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`,
+`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_,
 a Python version of this script that runs as ordinary filter.
 
 
@@ -26,7 +26,7 @@ You use ``pandoc-refheadstyle.lua`` **at your own risk**. You have been warned.
 
 You need `Pandoc <https://www.pandoc.org/>`_ 2.0 or newer.
 If you are using an older Pandoc version, have a look at
-`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`,
+`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_,
 which works with older versions of Pandoc.
 
 Download the `current release
@@ -91,4 +91,4 @@ GitHub:
 See also
 ========
 
-`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`
+`pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_
