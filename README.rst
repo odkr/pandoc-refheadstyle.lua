@@ -30,7 +30,7 @@ If you are using an older version of Pandoc, try
 which works with versions of Pandoc older than 2.0.
 
 1. Download the `current release
-   <https://codeload.github.com/odkr/pandoc-refheadstyle/tar.gz/v0.1.1>`_.
+   <https://codeload.github.com/odkr/pandoc-refheadstyle/tar.gz/v0.1.2>`_.
 2. Unpack it.
 3. Copy ``pandoc-refheadstyle.lua`` to the ``filters``
    subdirectory of your Pandoc data directory.
@@ -43,9 +43,9 @@ pages; typically, this is ``/usr/local/share/man/``.
 
 If you are using a Unix-ish operating system, you can do all of the above by::
 
-    curl https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.1.1 |
+    curl https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.1.2 |
         tar -xz
-    cd pandoc-refheadstyle.lua-0.1.1
+    cd pandoc-refheadstyle.lua-0.1.2
     PANDOC_DATA_DIR=$(pandoc --version |
         sed -n 's/^Default user data directory: //p')
     mkdir -p "${PANDOC_DATA_DIR:?}/filters"
