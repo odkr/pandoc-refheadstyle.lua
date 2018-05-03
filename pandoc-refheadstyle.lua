@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.1.1
+-- @release 0.1.3
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
