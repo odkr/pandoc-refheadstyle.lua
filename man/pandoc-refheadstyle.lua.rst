@@ -32,12 +32,12 @@ If the style does not exist, it will be created.
 
 ``pandoc-refheadstyle.lua`` identifies the reference section header as the
 first element, starting from the end of the document, that meets all of
-the following criteria:
+the following four criteria:
 
     1. It's one of the last five top-level elements of the document.
     2. It's a level-one header.
     3. It has the ID 'bibliography'.
-    4. It's header text is that set in ``reference-section-title``.
+    4. It's header text is the one set in ``reference-section-title``.
 
 A reference section header that was inserted by ``pandoc-citeproc``
 will meet all of those criteria.

@@ -44,8 +44,9 @@ By default, the reference section header will be assigned the custom style
 field \fBreference\-header\-style\fP to the name of a style of your choice.
 If the style does not exist, it will be created.
 .sp
-\fBpandoc\-refheadstyle.lua\fP considers any header the first header that meets
-\fIall\fP of the following four conditions the reference section header:
+\fBpandoc\-refheadstyle.lua\fP identifies the reference section header as the
+first element, starting from the end of the document, that meets all of
+the following four criteria:
 .INDENT 0.0
 .INDENT 3.5
 .INDENT 0.0
@@ -56,13 +57,13 @@ It\(aqs a level\-one header.
 .IP 3. 3
 It has the ID \(aqbibliography\(aq.
 .IP 4. 3
-It\(aqs header text is that set in \fBreference\-section\-title\fP\&.
+It\(aqs header text is the one set in \fBreference\-section\-title\fP\&.
 .UNINDENT
 .UNINDENT
 .UNINDENT
 .sp
-If your reference section header has been inserted by \fBpandoc\-citeproc\fP,
-it will meet all of those criteria.
+A reference section header that was inserted by \fBpandoc\-citeproc\fP
+will meet all of those criteria.
 .SH LICENSE
 .sp
 Copyright 2018 Odin Kroeger
