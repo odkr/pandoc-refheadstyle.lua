@@ -42,7 +42,7 @@ __STRICT = true
 --
 -- @return The text contained in that object as string.
 function metatostr (meta)
-    string = ''
+    local string = ''
     for _, v in ipairs(meta) do
         if v.t == 'Str' and v.c ~= nil then
             string = string .. v.c
@@ -94,17 +94,17 @@ end
 -- @return A Pandoc document, with the style of the reference header set
 --         (as Pandoc.Pandoc)
 function main (doc)
-    meta = get_meta(doc)
-    title = meta['reference-section-title']
-    style = meta['reference-header-style'] or REFHEADSTYLE
+    local meta = get_meta(doc)
+    local title = meta['reference-section-title']
+    local style = meta['reference-header-style'] or REFHEADSTYLE
     if not title then return end
-    last = #doc.blocks
-    stop = math.max(last - LASTNELEMS, 1)
+    local last = #doc.blocks
+    local stop = math.max(last - LASTNELEMS, 1)
     for i = last, stop, -1 do
-        element = doc.blocks[i]
+        local element = doc.blocks[i]
         if element.t == 'Header' and element.c[1] == 1 then
-            id, classes, attributes = table.unpack(element.c[2])
-            paragraph = element.c[3]
+            local id, classes, attributes = table.unpack(element.c[2])
+            local paragraph = element.c[3]
             if id == 'bibliography' and
                pandoc.utils.stringify(paragraph) == title
             then
