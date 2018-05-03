@@ -2,21 +2,21 @@
 pandoc-refheadstyle.lua
 =======================
 
-``pandoc-refheadstyle`` sets a custom style for the reference section header,
-but only if the metadata field ``reference-section-title`` has been set to a
-non-empty value.
+``pandoc-refheadstyle.lua`` sets a custom style for the reference section
+header, that is, if the metadata field ``reference-section-title`` has been
+set to a non-empty value.
 
 By default, the reference section header will be assigned the custom style
-'Bibliography Heading'. But you can change what style is assigned by setting
-the metadata field ``reference-header-style`` to the name of a style of
-your choice. If the style does not exist, it will be created.
+'Bibliography Heading'. But you can assign another style by setting the metadata
+field ``reference-header-style`` to the name of a style of your choice.
+If the style does not exist, it will be created.
 
 See the `manual page <man/pandoc-refheadstyle.lua.rst>`_ for more details.
 
 If you are using `panzer <https://github.com/msprev/panzer>`_ and need more
-fine-grained control over when which filter is applied, have a look at
+fine-grained control over which filter runs when, have a look at
 `pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_,
-a Python version of this script that runs as ordinary filter.
+which runs as ordinary filter.
 
 
 Installing ``pandoc-refheadstyle.lua``
@@ -25,21 +25,31 @@ Installing ``pandoc-refheadstyle.lua``
 You use ``pandoc-refheadstyle.lua`` **at your own risk**. You have been warned.
 
 You need `Pandoc <https://www.pandoc.org/>`_ 2.0 or newer.
-If you are using an older Pandoc version, have a look at
+If you are using an older version of Pandoc, try
 `pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_,
-which works with older versions of Pandoc.
+which works with versions of Pandoc older than 2.0.
 
-Download the `current release
-<https://codeload.github.com/odkr/pandoc-refheadstyle/tar.gz/v0.1.0>`_
-and copy it to the ``filters`` subdirectory of your Pandoc data directory.
+1. Download the `current release
+   <https://codeload.github.com/odkr/pandoc-refheadstyle/tar.gz/v0.1.0>`_.
+2. Unpack it.
+3. Copy ``pandoc-refheadstyle.lua`` to the ``filters``
+   subdirectory of your Pandoc data directory.
 
-You can do this by::
+Where your Pandoc data directory is located depends on your operating system.
+``pandoc --version`` will tell you. Consult the Pandoc manual for details.
 
-    curl https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.1.0 | tar -xz
+You may also want to copy the manual page to wherever your system stores manual
+pages; typically, this is ``/usr/local/share/man/``.
+
+If you are using a Unix-ish operating system, you can do all of the above by::
+
+    curl https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.1.0 |
+        tar -xz
     cd pandoc-refheadstyle.lua-0.1.0
-    mkdir -p ~/.pandoc/filters
-    cp pandoc-refheadstyle.lua ~/.pandoc/filters
-    # Copy the man page.
+    PANDOC_DATA_DIR=$(pandoc --version |
+        sed -n 's/^Default user data directory: //p')
+    mkdir -p "${PANDOC_DATA_DIR:?}/filters"
+    cp pandoc-refheadstyle.lua "${PANDOC_DATA_DIR:?}/filters"
     sudo cp man/pandoc-refheadstyle.lua.1 /usr/local/share/man/man1
 
 
