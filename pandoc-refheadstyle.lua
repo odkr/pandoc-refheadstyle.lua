@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.1.0
+-- @release 0.1.1
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
@@ -37,8 +37,6 @@ __STRICT = true
 
 
 --- Converts a Pandoc.MetaInline value to a string.
---
--- I shouldn't have had to write this.
 --
 -- @param meta A Pandoc.MetaInline value.
 --
@@ -106,13 +104,13 @@ function main (doc)
         element = doc.blocks[i]
         if element.t == 'Header' and element.c[1] == 1 then
             id, classes, attributes = table.unpack(element.c[2])
-            if id == 'bibliography' then
-                paragraph = element.c[3]
-                if pandoc.utils.stringify(paragraph) == title then
-                    doc.blocks[i] = pandoc.Div(pandoc.Para(pandoc.Str(title)),
-                        pandoc.Attr(id, classes, {['custom-style']=style}))
-                    return doc
-                end
+            paragraph = element.c[3]
+            if id == 'bibliography' and
+               pandoc.utils.stringify(paragraph) == title
+            then
+                doc.blocks[i] = pandoc.Div(pandoc.Para(pandoc.Str(title)),
+                    pandoc.Attr(id, classes, {['custom-style']=style}))
+                return doc
             end
         end
     end
