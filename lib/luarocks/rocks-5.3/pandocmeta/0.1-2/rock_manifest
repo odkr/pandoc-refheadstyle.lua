@@ -1,0 +1,6 @@
+rock_manifest = {
+   lua = {
+      ["pandocmeta.lua"] = "9f910cec5c5b57d39d2b4b703b382404"
+   },
+   ["pandocmeta-0.1-2.rockspec"] = "78a5ade592b6deb6c08d6876e6d380b4"
+}
