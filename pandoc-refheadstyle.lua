@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.1.3
+-- @release 0.1.5
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
@@ -25,52 +25,37 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
+-- # Globals
+
 -- The style to use for the reference header
 -- if ``reference-header-style`` isn't set or empty.
-REFHEADSTYLE = 'Bibliography Heading'
+local REFHEADSTYLE = 'Bibliography Heading'
 
 -- Where to start looking for the reference section header (from the end).
-LASTNELEMS = 5
+local LASTNELEMS = 5
 
 
-__STRICT = true
+-- # Boilerplate
 
+local package = package
+local path_sep = package.config:sub(1, 1)
+local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$')
 
---- Converts a Pandoc.MetaInline value to a string.
---
--- @param meta A Pandoc.MetaInline value.
---
--- @return The text contained in that object as string.
-function metatostr (meta)
-    local string = ''
-    for _, v in ipairs(meta) do
-        if v.t == 'Str' and v.c ~= nil then
-            string = string .. v.c
-        elseif v.t == 'Space' then
-            string = string .. ' '
-        else
-            string = string .. metatostr(v)
-        end
-    end
-    return string
+local lua_versions = {}
+for _, v in ipairs({_VERSION:sub(5, 7), '5.3'}) do
+    lua_versions[v] = true
 end
 
-
---- Returns simple metadata fields.
---
--- @param doc A Pandoc document (as Pandoc.Pandoc).
---
--- @return Metadata fields (as table).
-function get_meta (doc)
-    local meta = {}
-    for k, v in pairs(doc.meta) do
-        if v and v.t == 'MetaInlines' then
-            meta[k] = metatostr(v)
-        end
-    end
-    return meta
+for k, _ in pairs(lua_versions) do
+    local module_path = {script_dir, 'share', 'lua', k, '?.lua'}
+    local module_dir = table.concat(module_path, path_sep)
+    package.path = package.path .. ';' .. module_dir
 end
 
+require 'pandocmeta'
+
+
+-- # Functions
 
 --- Sets the style of the reference section header.
 --
@@ -94,7 +79,7 @@ end
 -- @return A Pandoc document, with the style of the reference header set
 --         (as Pandoc.Pandoc)
 function main (doc)
-    local meta = get_meta(doc)
+    local meta = pandocmeta.totable(doc.meta)
     local title = meta['reference-section-title']
     local style = meta['reference-header-style'] or REFHEADSTYLE
     if not title then return end
