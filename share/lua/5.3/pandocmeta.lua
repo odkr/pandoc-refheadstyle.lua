@@ -1,11 +1,9 @@
 #!/usr/local/bin/lua
 --- Converts Pandoc metadata types to a multidimensional table.
 --
--- @release 0.1-2
+-- @release 0.2-0
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
---
--- @see main For details.
 --
 -- Permission is hereby granted, free of charge, to any person obtaining a copy
 -- of this software and associated documentation files (the "Software"), to
@@ -25,16 +23,13 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
+
 -- # Boilerplate
 local io = io
 local package = package
 
-local P = {
-    ['pairs'] = pairs,
-    ['print'] = print,
-    ['tostring'] = tostring,
-    ['type'] = type,
-}
+local P = {['pairs'] = pairs, ['print'] = print,
+    ['tostring'] = tostring, ['type'] = type,}
 
 if _REQUIREDNAME == nil then
     pandocmeta = P
@@ -45,21 +40,6 @@ end
 local _ENV = P
 
 
---- Converts Pandoc metadata types to a multidimensional table.
---
--- Takes metadata of Pandoc document, i.e., a MetaBlocks, a MetaInlines,
--- a MetaMap, or a MetaList and converts it to a, possibly, multidimensional
--- table, where each value is either a string or a boolean.
---
--- Caveats:
---  * Does *not* support MetaString and MetaBool
---    (but that doesn't appear to be necessary).
---  * Does not convert numbers to intenger
---    (there's no way to be sure that this is what you want).
---
--- @param meta A Pandoc metadata block (as Pandoc.Meta or any of the above).
---
--- @return The given metadata as table.
 do
     local newline = (function()
         if package.config:sub(1,1) == '\\\\' then
@@ -70,8 +50,8 @@ do
     end)()
 
     local handlers = {
-        ['MetaList'] = '<recurse>',
-        ['MetaMap'] = '<recurse>',
+        ['MetaList'] = 'R',
+        ['MetaMap'] = 'R',
         ['MetaBlocks'] = function(blocks)
                 local string = ''
                 for i, para in pairs(blocks) do
@@ -104,11 +84,11 @@ do
     }
 
     local types = {
-        ['boolean'] = '<use as is>',
-        ['string'] = '<use as is>',
+        ['boolean'] = 'U',
+        ['string'] = 'U',
         ['table'] = function(v)
                 local handler = handlers[v.t]
-                if handler == '<recurse>' then
+                if handler == 'R' then
                     return totable(v)
                 elseif handler ~= nil then
                     return handler(v)
@@ -119,19 +99,38 @@ do
             end
     }
 
+    --- Converts Pandoc metadata types to a multidimensional table.
+    --
+    -- Takes metadata of Pandoc document, i.e., a MetaBlocks, a MetaInlines,
+    -- a MetaMap, or a MetaList and converts it to a, possibly multi-
+    -- dimensional, table, where each value is either a string or a boolean.
+    --
+    -- Caveats:
+    --  Does *not* support MetaString and MetaBool
+    --  (but that doesn't appear to be necessary).
+    --  Does not convert numbers to intenger
+    --  (there's no way to be sure that this is what you want).
+    --
+    -- @param meta A Pandoc metadata block
+    --             (as Pandoc.Meta or any of the above).
+    --
+    -- @return The given metadata as a table.
     function totable (meta)
         if meta == nil then return end
         local tab = {}
         for k, v in pairs(meta) do
             local handler = types[type(v)]
-            if handler == '<use as is>' then
+            if handler == 'U' then
                 tab[k] = v
             elseif handler ~= nil then
                 tab[k] = handler(v)
             else
-                io.stderr:write(tostring(v.t) .. ': unknown metadata type.\n')
+                io.stderr:write(tostring(v.t) ..
+                    ': unknown metadata type.\n')
             end
         end
         return tab
     end
 end
+
+return P
