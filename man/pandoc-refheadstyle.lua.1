@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH PANDOC-REFHEADSTYLE.LUA 1 "May 2, 2018" "0.1.5" ""
+.TH PANDOC-REFHEADSTYLE.LUA 1 "May 2, 2018" "0.2-b1" ""
 .SH NAME
 pandoc-refheadstyle.lua \- Sets style of reference section header
 .
@@ -32,7 +32,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 ..
 .SH SYNOPSIS
 .sp
-pandoc [...] \-\-lua\-filter pandoc\-refheadstyle.lua\-0.1.5/pandoc\-refheadstyle.lua [...]
+pandoc [...] \-\-lua\-filter pandoc\-refheadstyle.lua\-0.2\-b1/pandoc\-refheadstyle.lua [...]
 .SH DESCRIPTION
 .sp
 \fBpandoc\-refheadstyle.lua\fP sets a custom style for the reference section
@@ -40,30 +40,20 @@ header, that is, if the metadata field \fBreference\-section\-title\fP has been
 set to a non\-empty value.
 .sp
 By default, the reference section header will be assigned the custom style
-\(aqBibliography Heading\(aq. But you can assign another style by setting the metadata
-field \fBreference\-header\-style\fP to the name of a style of your choice.
-If the style does not exist, it will be created.
+\(aqBibliography Heading\(aq. But you can assign another style by setting the
+metadata field \fBreference\-header\-style\fP to the name of a style of your
+choice. If the style does not exist, it will be created.
 .sp
-\fBpandoc\-refheadstyle.lua\fP identifies the reference section header as the
-first element, starting from the end of the document, that meets all of
-the following four criteria:
-.INDENT 0.0
-.INDENT 3.5
-.INDENT 0.0
-.IP 1. 3
-It\(aqs one of the last five top\-level elements of the document.
-.IP 2. 3
-It\(aqs a level\-one header.
-.IP 3. 3
-It has the ID \(aqbibliography\(aq.
-.IP 4. 3
-It\(aqs header text is the one set in \fBreference\-section\-title\fP\&.
-.UNINDENT
-.UNINDENT
-.UNINDENT
+By fiat, the reference section header is the first header, starting from the
+end of the document and ignoring the reference section itself, that has the
+ID \(aqbibliography\(aq and the header text set in \fBreference\-section\-title\fP\&.
+(A header inserted by \fBpandoc\-citeproc\fP will meet these criteria.)
+.SH CAVEATS
 .sp
-A reference section header that was inserted by \fBpandoc\-citeproc\fP
-will meet all of those criteria.
+\fBpandoc\-refheadstyle.lua\fP starts looking for a reference header at the
+end of document but changes direction whenever it descends the document\(aqs
+abstract syntax tree. That is, it will prefer the first header within the
+last top\-level block to the last header within the last top\-level block.
 .SH LICENSE
 .sp
 Copyright 2018 Odin Kroeger
