@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Converts Pandoc metadata types to a multidimensional table.
 --
--- @release 0.2-0
+-- @release 0.2-1
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
@@ -24,7 +24,9 @@
 -- IN THE SOFTWARE.
 
 
--- # Boilerplate
+-- Boilerplate
+-- ===========
+
 local io = io
 local package = package
 
@@ -39,6 +41,9 @@ end
 
 local _ENV = P
 
+
+-- Function
+-- ========
 
 do
     local newline = (function()

@@ -1,4 +1,4 @@
---- Tests whether code-generated types are recognised.
+--- Tests the second example for a YAML header in the Pandoc documentation.
 --
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
@@ -21,22 +21,19 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
-
 local package = package
 local path_sep = package.config:sub(1, 1)
-local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$')
+local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
 local module_dir = table.concat({script_dir, '..', 'src', '?.lua'}, path_sep)
 package.path = package.path .. ';' .. module_dir
 
 require 'pandocmeta'
 
-function main()
-    a_string = pandoc.MetaString('This is a string.')
-    a_bool = pandoc.MetaBool(true)
-    meta = pandoc.Meta({a_string=a_string, a_bool=a_bool})
-    meta_t = pandocmeta.totable(meta)
-    assert(meta_t['a_string'] == 'This is a string.')
-    assert(meta_t['a_bool'] == true)
+function Pandoc (doc)
+    meta = pandocmeta.totable(doc.meta)
+    assert(meta['title'] == 'The document title')
+    assert(meta['author'][1]['name'] == 'Author One')
+    assert(meta['author'][1]['affiliation'] == 'University of Somewhere')
+    assert(meta['author'][2]['name'] == 'Author Two')
+    assert(meta['author'][2]['affiliation'] == 'University of Nowhere')
 end
-
-return {{Pandoc=main}}

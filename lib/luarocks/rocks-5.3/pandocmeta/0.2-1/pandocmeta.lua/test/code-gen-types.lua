@@ -1,4 +1,4 @@
---- Tests the first example for a YAML header in the Pandoc documentation.
+--- Tests whether code-generated types are recognised.
 --
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
@@ -24,22 +24,17 @@
 
 local package = package
 local path_sep = package.config:sub(1, 1)
-local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$')
+local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
 local module_dir = table.concat({script_dir, '..', 'src', '?.lua'}, path_sep)
 package.path = package.path .. ';' .. module_dir
 
 require 'pandocmeta'
 
-function main (doc)
-    meta = pandocmeta.totable(doc.meta)
-    assert(meta['title'] == 'This is the title: it contains a colon')
-    assert(meta['author'][1] == 'Author One')
-    assert(meta['author'][2] == 'Author Two')
-    assert(meta['author'][3] == nil)
-    assert(meta['tags'][1] == 'nothing')
-    assert(meta['tags'][2] == 'nothingness')
-    assert(meta['tags'][3] == nil)
-    assert(meta['abstract'] == 'This is the abstract.\nIt consists of two paragraphs.')
+function Pandoc()
+    a_string = pandoc.MetaString('This is a string.')
+    a_bool = pandoc.MetaBool(true)
+    meta = pandoc.Meta({a_string=a_string, a_bool=a_bool})
+    meta_t = pandocmeta.totable(meta)
+    assert(meta_t['a_string'] == 'This is a string.')
+    assert(meta_t['a_bool'] == true)
 end
-
-return {{Pandoc = main}}
