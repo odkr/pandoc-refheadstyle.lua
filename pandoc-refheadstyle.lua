@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.1.5
+-- @release 0.2-b1
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
@@ -25,37 +25,58 @@
 -- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 -- IN THE SOFTWARE.
 
--- # Globals
+-- Constants
+-- =========
 
--- The style to use for the reference header
--- if ``reference-header-style`` isn't set or empty.
+-- Style to use if ``reference-header-style`` isn't set.
 local REFHEADSTYLE = 'Bibliography Heading'
 
--- Where to start looking for the reference section header (from the end).
-local LASTNELEMS = 5
 
-
--- # Boilerplate
+-- Boilerplate
+-- ===========
 
 local package = package
-local path_sep = package.config:sub(1, 1)
-local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$')
-
+local pathsep = package.config:sub(1, 1)
+local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
 local lua_versions = {}
+
 for _, v in ipairs({_VERSION:sub(5, 7), '5.3'}) do
     lua_versions[v] = true
 end
 
 for k, _ in pairs(lua_versions) do
-    local module_path = {script_dir, 'share', 'lua', k, '?.lua'}
-    local module_dir = table.concat(module_path, path_sep)
-    package.path = package.path .. ';' .. module_dir
+    local module_pattern_table = {script_dir, 'share', 'lua', k, '?.lua'}
+    local module_pattern = table.concat(module_pattern_table, pathsep)
+    package.path = package.path .. ';' .. module_pattern
 end
 
 require 'pandocmeta'
 
 
--- # Functions
+-- Functions
+-- =========
+
+--- Sets the style of a header if it meets certain criteria.
+--
+-- Takes a header block and if and only if it has the id 'bibliography'
+-- and the given title, set the given style as 'custom-style'.
+--
+-- @param header A header block (as Pandoc.Header)
+-- @param title A title to match (as string)
+-- @param style The style to assign of the above conditions are met.
+--
+-- @return nil If the given header doesn't match the criteria.
+-- @return Otherwise, a block element,
+--         with the given style set as 'custom-style' (as Pandoc.Div).
+function set_refheadstyle (header, title, style)
+    local id, classes, attributes = table.unpack(header.c[2])
+    local content = header.c[3]
+    if id == 'bibliography' and pandoc.utils.stringify(content) == title then
+        attributes['custom-style'] = style
+        return pandoc.Div(pandoc.Para(pandoc.Str(title)),
+            pandoc.Attr(id, classes, attributes))
+    end
+end
 
 --- Sets the style of the reference section header.
 --
@@ -63,42 +84,38 @@ require 'pandocmeta'
 -- via the ``reference-section-title`` metadata field, sets the style of that
 -- header to the one set in the metadata field ``reference-header-style``.
 -- If that field has not been set or is empty, sets it the the value of the
--- global variable REFHEADSTYLE.
+-- module constant REFHEADSTYLE.
 --
 -- Assumes that the reference section header:
---  * is one of the last N elements of the document,
---    where N is the value of the global variable LASTNELEMS;
---  * is a top-level header;
---  * has the ID 'bibliography';
---  * and has the text that has been set in ``reference-section-title``.
+-- (1) is of the type Header;
+-- (2) has the ID 'bibliography';
+-- (3) and has the text that has been set in ``reference-section-title``.
 --
 -- @param doc A Pandoc document (as Pandoc.Pandoc)
 --
--- @return nil If ``reference-section-title`` has not been set or is empty,
---             or if no reference header could be found.
--- @return A Pandoc document, with the style of the reference header set
---         (as Pandoc.Pandoc)
-function main (doc)
+-- @return A Pandoc document (as Pandoc.Pandoc),
+--         with the style of the reference header set --
+--         if and only if a reference header was found.
+-- @return nil If ``reference-section-title`` hasn't been set.
+function Pandoc (doc)
     local meta = pandocmeta.totable(doc.meta)
     local title = meta['reference-section-title']
     local style = meta['reference-header-style'] or REFHEADSTYLE
     if not title then return end
-    local last = #doc.blocks
-    local stop = math.max(last - LASTNELEMS, 1)
-    for i = last, stop, -1 do
+    setter = function(header)
+        return set_refheadstyle(header, title, style)
+    end
+    for i = #doc.blocks, 1, -1 do
         local element = doc.blocks[i]
-        if element.t == 'Header' and element.c[1] == 1 then
-            local id, classes, attributes = table.unpack(element.c[2])
-            local paragraph = element.c[3]
-            if id == 'bibliography' and
-               pandoc.utils.stringify(paragraph) == title
-            then
-                doc.blocks[i] = pandoc.Div(pandoc.Para(pandoc.Str(title)),
-                    pandoc.Attr(id, classes, {['custom-style']=style}))
+        if element.t == 'Header' then
+            local header = set_refheadstyle(element, title, style)
+            if header ~= nil then
+                doc.blocks[i] = header
                 return doc
             end
+        elseif not (element.t == 'Div' and element.c[1][1] == 'refs') then
+            doc.blocks[i] = pandoc.walk_block(element, {Header = setter})
         end
     end
+    return doc
 end
-
-return {{Pandoc = main}}
