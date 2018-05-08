@@ -1,7 +1,7 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.2-b1
+-- @release 0.2.1
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 --
@@ -36,18 +36,16 @@ local REFHEADSTYLE = 'Bibliography Heading'
 -- ===========
 
 local package = package
-local pathsep = package.config:sub(1, 1)
-local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
-local lua_versions = {}
 
-for _, v in ipairs({_VERSION:sub(5, 7), '5.3'}) do
-    lua_versions[v] = true
-end
-
-for k, _ in pairs(lua_versions) do
-    local module_pattern_table = {script_dir, 'share', 'lua', k, '?.lua'}
-    local module_pattern = table.concat(module_pattern_table, pathsep)
-    package.path = package.path .. ';' .. module_pattern
+do
+    local path_sep = package.config:sub(1, 1)
+    local s_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
+    local lua_vers = {}
+    for _, v in ipairs({_VERSION:sub(5, 7), '5.3'}) do lua_vers[v] = true end
+    for k, _ in pairs(lua_vers) do
+        package.path = package.path .. ';' .. 
+            table.concat({s_dir, 'share', 'lua', k, '?.lua'}, path_sep)
+    end
 end
 
 require 'pandocmeta'
