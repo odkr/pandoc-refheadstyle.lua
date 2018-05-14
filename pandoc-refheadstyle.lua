@@ -39,12 +39,14 @@ local package = package
 
 do
     local path_sep = package.config:sub(1, 1)
-    local s_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
+    local script_dir = PANDOC_SCRIPT_FILE:match('(.-)[\\/][^\\/]-$') or '.'
     local lua_vers = {}
     for _, v in ipairs({_VERSION:sub(5, 7), '5.3'}) do lua_vers[v] = true end
-    for k, _ in pairs(lua_vers) do
+    for k in pairs(lua_vers) do
         package.path = package.path .. ';' .. 
-            table.concat({s_dir, 'share', 'lua', k, '?.lua'}, path_sep)
+            table.concat({script_dir, 'share', 'lua', k, '?.lua'}, path_sep)
+        package.cpath = package.cpath .. ';' .. 
+            table.concat({script_dir, 'lib', 'lua', k, '?.lua'}, path_sep)
     end
 end
 
@@ -75,6 +77,7 @@ function set_refheadstyle (header, title, style)
             pandoc.Attr(id, classes, attributes))
     end
 end
+
 
 --- Sets the style of the reference section header.
 --
