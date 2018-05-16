@@ -1,7 +1,7 @@
 commands = {}
 dependencies = {
    pandocmeta = {
-      ["0.2-1"] = {
+      ["0.3-0"] = {
          {
             constraints = {
                {
@@ -24,12 +24,12 @@ dependencies = {
 }
 modules = {
    pandocmeta = {
-      "pandocmeta/0.2-1"
+      "pandocmeta/0.3-0"
    }
 }
 repository = {
    pandocmeta = {
-      ["0.2-1"] = {
+      ["0.3-0"] = {
          {
             arch = "installed",
             commands = {},

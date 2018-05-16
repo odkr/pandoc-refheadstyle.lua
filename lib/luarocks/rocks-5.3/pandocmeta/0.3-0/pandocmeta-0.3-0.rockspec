@@ -1,8 +1,8 @@
 package = "pandocmeta"
-version = "0.2-1"
+version = "0.3-0"
 source = {
    url = "git://github.com/odkr/pandocmeta.lua",
-   tag = "v0.2-1"
+   tag = "v0.3-0"
 }
 description = {
    summary = "Convert Pandoc metadata types to a table.",
@@ -36,7 +36,8 @@ for a real-word example.
 
 See <https://github.com/odkr/pandocmeta.lua> for details.
 ]],
-   license = "MIT" -- or whatever you like
+   license = "MIT",
+   homepage = 'https://github.com/odkr/pandocmeta.lua'
 }
 dependencies = {
    "lua >= 5.3, <6"
@@ -46,5 +47,5 @@ build = {
     modules = {
         pandocmeta = "pandocmeta.lua/src/pandocmeta.lua"
     },
-    copy_directories = { "pandocmeta.lua/doc", "pandocmeta.lua/test" }
+    copy_directories = { "pandocmeta.lua/docs", "pandocmeta.lua/test" }
 }

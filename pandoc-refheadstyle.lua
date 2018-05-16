@@ -50,7 +50,7 @@ do
     end
 end
 
-require 'pandocmeta'
+local pandocmeta = require 'pandocmeta'
 
 
 -- Functions

@@ -1,28 +1,19 @@
 #!/usr/local/bin/lua
 --- Converts Pandoc metadata types to a multidimensional table.
 --
--- @release 0.2-1
+-- @usage
+--      pandocmeta = require 'pandocmeta'
+--
+--      function Meta (meta)
+--          local table = pandocmeta.totable(meta)
+--      end
+--
+--
+-- @module pandocmeta
+-- @release 0.3-0
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
---
--- Permission is hereby granted, free of charge, to any person obtaining a copy
--- of this software and associated documentation files (the "Software"), to
--- deal in the Software without restriction, including without limitation the
--- rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
--- sell copies of the Software, and to permit persons to whom the Software is
--- furnished to do so, subject to the following conditions:
---
--- The above copyright notice and this permission notice shall be included in
--- all copies or substantial portions of the Software.
---
--- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
--- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
--- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
--- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
--- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
--- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
--- IN THE SOFTWARE.
-
+-- @license MIT
 
 -- Boilerplate
 -- ===========
@@ -30,15 +21,12 @@
 local io = io
 local package = package
 
-local P = {['pairs'] = pairs, ['print'] = print,
-    ['tostring'] = tostring, ['type'] = type,}
+local pairs = pairs
+local print = print
+local tostring = tostring
+local type = type
 
-if _REQUIREDNAME == nil then
-    pandocmeta = P
-else
-    _G[_REQUIREDNAME] = P
-end
-
+local P = {}
 local _ENV = P
 
 
@@ -106,20 +94,19 @@ do
 
     --- Converts Pandoc metadata types to a multidimensional table.
     --
-    -- Takes metadata of Pandoc document, i.e., a MetaBlocks, a MetaInlines,
-    -- a MetaMap, or a MetaList and converts it to a, possibly multi-
-    -- dimensional, table, where each value is either a string or a boolean.
+    -- Takes metadata of Pandoc document, i.e., a `pandoc.MetaBlocks`,
+    -- `pandoc.MetaInlines`, `pandoc.MetaMap`, or `pandoc.MetaList` and
+    -- converts it to a, possibly multi-dimensional, table, where each
+    -- value is either a string or a boolean.
     --
     -- Caveats:
-    --  Does *not* support MetaString and MetaBool
-    --  (but that doesn't appear to be necessary).
     --  Does not convert numbers to intenger
     --  (there's no way to be sure that this is what you want).
     --
     -- @param meta A Pandoc metadata block
-    --             (as Pandoc.Meta or any of the above).
+    --  (as `pandoc.Meta` or any of the above).
     --
-    -- @return The given metadata as a table.
+    -- @treturn table The given metadata.
     function totable (meta)
         if meta == nil then return end
         local tab = {}

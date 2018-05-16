@@ -24,11 +24,11 @@
 
 local package = package
 local path_sep = package.config:sub(1, 1)
-local script_dir = string.match(PANDOC_SCRIPT_FILE, '(.-)[\\/][^\\/]-$') or '.'
+local script_dir = PANDOC_SCRIPT_FILE:match('(.-)[\\/][^\\/]-$') or '.'
 local module_dir = table.concat({script_dir, '..', 'src', '?.lua'}, path_sep)
 package.path = package.path .. ';' .. module_dir
 
-require 'pandocmeta'
+pandocmeta = require 'pandocmeta'
 
 function Pandoc()
     a_string = pandoc.MetaString('This is a string.')
