@@ -1,11 +1,11 @@
 #!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
--- @release 0.2.1
+-- @script pandoc-refheadstyle.lua
+-- @release 0.2.2
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
---
--- @see main For details.
+-- @license MIT
 --
 -- Permission is hereby granted, free of charge, to any person obtaining a copy
 -- of this software and associated documentation files (the "Software"), to
@@ -61,13 +61,13 @@ local pandocmeta = require 'pandocmeta'
 -- Takes a header block and if and only if it has the id 'bibliography'
 -- and the given title, set the given style as 'custom-style'.
 --
--- @param header A header block (as Pandoc.Header)
--- @param title A title to match (as string)
--- @param style The style to assign of the above conditions are met.
+-- @tparam Pandoc.Header header A header block
+-- @tparam string title A title to match
+-- @tparam string style The name of the style to assign.
 --
 -- @return nil If the given header doesn't match the criteria.
--- @return Otherwise, a block element,
---         with the given style set as 'custom-style' (as Pandoc.Div).
+--  Otherwise, a block element, with the given style set as
+--  'custom-style' (as `Pandoc.Div`).
 function set_refheadstyle (header, title, style)
     local id, classes, attributes = table.unpack(header.c[2])
     local content = header.c[3]
@@ -82,22 +82,23 @@ end
 --- Sets the style of the reference section header.
 --
 -- Takes a document and if and only if a reference section title has been set
--- via the ``reference-section-title`` metadata field, sets the style of that
--- header to the one set in the metadata field ``reference-header-style``.
+-- via the 'reference-section-title' metadata field, sets the style of that
+-- header to the one set in the metadata field 'reference-header-style'.
 -- If that field has not been set or is empty, sets it the the value of the
--- module constant REFHEADSTYLE.
+-- module constant `REFHEADSTYLE`.
 --
 -- Assumes that the reference section header:
--- (1) is of the type Header;
--- (2) has the ID 'bibliography';
--- (3) and has the text that has been set in ``reference-section-title``.
 --
--- @param doc A Pandoc document (as Pandoc.Pandoc)
+-- 1. is of the type Header;
+-- 2. has the ID 'bibliography';
+-- 3. and has the text that has been set in 'reference-section-title'.
 --
--- @return A Pandoc document (as Pandoc.Pandoc),
---         with the style of the reference header set --
---         if and only if a reference header was found.
--- @return nil If ``reference-section-title`` hasn't been set.
+-- @tparam pandoc.Pandoc doc A Pandoc document.
+--
+-- @return A Pandoc document (as `pandoc.Pandoc`),
+--  with the style of the reference header set --
+--  if and only if a reference header was found.
+--  Otherwise `nil`.
 function Pandoc (doc)
     local meta = pandocmeta.totable(doc.meta)
     local title = meta['reference-section-title']
