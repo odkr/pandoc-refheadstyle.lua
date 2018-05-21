@@ -1,8 +1,8 @@
 package = "pandocmeta"
-version = "0.3-0"
+version = "0.3-1"
 source = {
    url = "git://github.com/odkr/pandocmeta.lua",
-   tag = "v0.3-0"
+   tag = "v0.3-1"
 }
 description = {
    summary = "Convert Pandoc metadata types to a table.",
