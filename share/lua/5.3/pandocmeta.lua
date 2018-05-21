@@ -10,7 +10,7 @@
 --
 --
 -- @module pandocmeta
--- @release 0.3-0
+-- @release 0.3-1
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 -- @license MIT
@@ -53,6 +53,10 @@ do
                         if type(word) == 'table' then
                             if word.c == nil then
                                 string = string .. ' '
+                            elseif type(word.c) == 'table' then
+                                for _, v in pairs(word.c) do
+                                     string = string .. v
+                                end
                             else
                                 string = string .. word.c
                             end
