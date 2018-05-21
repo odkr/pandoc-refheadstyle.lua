@@ -2,7 +2,7 @@
 --- Sets the style of the reference section header.
 --
 -- @script pandoc-refheadstyle.lua
--- @release 0.2.2
+-- @release 0.2.3
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 -- @license MIT

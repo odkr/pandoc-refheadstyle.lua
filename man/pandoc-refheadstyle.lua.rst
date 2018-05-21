@@ -8,14 +8,14 @@ Sets style of reference section header
 
 :Author: Odin Kroeger
 :Date: May 2, 2018
-:Version: 0.2.2
+:Version: 0.2.3
 :Manual section: 1
 
 
 SYNOPSIS
 ========
 
-pandoc [...] --lua-filter pandoc-refheadstyle.lua-0.2.2/pandoc-refheadstyle.lua [...]
+pandoc [...] --lua-filter pandoc-refheadstyle.lua-0.2.3/pandoc-refheadstyle.lua [...]
 
 
 DESCRIPTION
