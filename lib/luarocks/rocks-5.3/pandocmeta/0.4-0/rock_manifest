@@ -1,14 +1,14 @@
 rock_manifest = {
    lua = {
-      ["pandocmeta.lua"] = "f81c83d10408d4569cfbf8bd16f0a536"
+      ["pandocmeta.lua"] = "511ebf02a02d583e0c950b1c0c3b11ea"
    },
-   ["pandocmeta-0.3-1.rockspec"] = "0f62d4a76849ba84052d6e968f5b11ef",
+   ["pandocmeta-0.4-0.rockspec"] = "33689732559db171331bb7b38b91808c",
    ["pandocmeta.lua"] = {
-      docs = {
-         ["index.html"] = "7bad47fa502756ac78bc417f92f007d3",
+      doc = {
+         ["index.html"] = "0afed8a162d1a2b19ec52b3d29318635",
          ["ldoc.css"] = "e2b04e90ff648f8e00d9d4d458de59d9",
          topics = {
-            ["README.md.html"] = "4f224d1fa2cff46cc806a1fd97e9c78c"
+            ["README.md.html"] = "19fbc9af56fd868816422acc8366a05d"
          }
       },
       test = {

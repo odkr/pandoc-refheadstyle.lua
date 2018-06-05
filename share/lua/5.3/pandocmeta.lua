@@ -10,7 +10,7 @@
 --
 --
 -- @module pandocmeta
--- @release 0.3-1
+-- @release 0.4-0
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 -- @license MIT
