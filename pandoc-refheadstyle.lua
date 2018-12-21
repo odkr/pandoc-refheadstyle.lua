@@ -1,8 +1,7 @@
-#!/usr/local/bin/lua
 --- Sets the style of the reference section header.
 --
 -- @script pandoc-refheadstyle.lua
--- @release 0.2.3
+-- @release 0.2.4
 -- @author Odin Kroeger
 -- @copyright 2018 Odin Kroeger
 -- @license MIT
