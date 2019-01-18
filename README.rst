@@ -25,7 +25,7 @@ which runs as ordinary filter.
 Synposis
 ========
 
-    pandoc [...] --lua-filter pandoc-zotxt.lua-0.2.1/pandoc-zotxt.lua [...]
+pandoc [...] --lua-filter pandoc-zotxt.lua-0.2.1/pandoc-zotxt.lua [...]
 
 
 Caveats
