@@ -11,12 +11,30 @@ By default, the reference section header will be assigned the custom style
 field ``reference-header-style`` to the name of a style of your choice.
 If the style does not exist, it will be created.
 
-See the `manual page <man/pandoc-refheadstyle.lua.rst>`_ for more details.
+By fiat, the reference section header is the first header, starting from the
+end of the document and ignoring the reference section itself, that has the
+ID 'bibliography' and the header text set in ``reference-section-title``.
+(A header inserted by ``pandoc-citeproc`` will meet these criteria.)
 
 If you are using `panzer <https://github.com/msprev/panzer>`_ and need more
 fine-grained control over which filter runs when, have a look at
 `pandoc-refheadstyle <https://github.com/odkr/pandoc-refheadstyle>`_,
 which runs as ordinary filter.
+
+
+Synposis
+========
+
+    pandoc [...] --lua-filter pandoc-zotxt.lua-0.2.1/pandoc-zotxt.lua [...]
+
+
+Caveats
+=======
+
+``pandoc-refheadstyle.lua`` starts looking for a reference header at the
+end of document but changes direction whenever it descends the document's
+abstract syntax tree. That is, it will prefer the first header within the
+last top-level block to the last header within the last top-level block.
 
 
 Installing ``pandoc-refheadstyle.lua``
@@ -38,19 +56,14 @@ which works with versions of Pandoc older than 2.0.
 Where your Pandoc data directory is located depends on your operating system.
 ``pandoc --version`` will tell you. Consult the Pandoc manual for details.
 
-You may also want to copy the manual page to wherever your system stores manual
-pages; typically, this is ``/usr/local/share/man/``.
-
 If you are using a Unix-ish operating system, you can do all of the above by::
 
     PANDOC_DATA_DIR=$(pandoc --version |
         sed -n 's/^Default user data directory: //p')
     mkdir -p "${PANDOC_DATA_DIR:?}/filters"
     cd "${PANDOC_DATA_DIR:?}/filters"
-    curl https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.2.5 |
+    curl -f https://codeload.github.com/odkr/pandoc-refheadstyle.lua/tar.gz/v0.2.5 |
         tar -xz
-    sudo cp pandoc-refheadstyle.lua-0.2.5/man/pandoc-refheadstyle.lua.1 \
-        /usr/local/share/man/man1
 
 
 Documentation
