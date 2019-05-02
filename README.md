@@ -33,7 +33,7 @@ which works with versions of Pandoc older than 2.0 (but also requires
 If you have [curl](https://curl.haxx.se/) or 
 [wget](https://www.gnu.org/software/wget/), you can (probably)
 install `pandoc-refheadstyle.lua` by copy-pasting the
-following instructions into a bourne shell:
+following commands into a bourne shell:
 
 ```sh
 (
@@ -46,7 +46,7 @@ following instructions into a bourne shell:
     mkdir -p "${PANDOC_FILTERS:?}" && cd -P "$PANDOC_FILTERS" && {
         {
             curl -LsS "$URL" || ERR=$?
-            [ "${ERR-0}" -eq 127 ] && wget -q -nc -O - "$URL"
+            [ "${ERR-0}" -eq 127 ] && wget -q -O - "$URL"
         } | tar xz
         mv "$REPOSITORY/pandoc-zotxt.lua" .
         [ -d "$MAN_PATH" ] && \
