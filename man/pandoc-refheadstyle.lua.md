@@ -11,7 +11,7 @@ pandoc-refheadstyle.lua - sets a custom style for the reference section
 
 # SYNOPSIS
 
-**pandoc** **--lua-filter** *pandoc-zotxt.lua*
+**pandoc** **--lua-filter** *pandoc-refheadstyle.lua*
 
 
 # DESCRIPTION
