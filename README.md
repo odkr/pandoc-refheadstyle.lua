@@ -25,13 +25,10 @@ which works with versions of Pandoc older than 2.0 (but also requires
    [latest release](https://github.com/odkr/pandoc-refheadstyle.lua/releases/latest).
 2. Unpack it.
 3. Move `pandoc-refheadstyle.lua` from the repository directory to the
-   `filters` sub-directory of your Pandoc data directory    
+   `filters` sub-directory of your Pandoc data directory
    (`pandoc --version` will tell you where that is).
 
 ### POSIX-compliant systems
-
-You may want to copy the manual page to wherever your system stores them
-(typically `/usr/local/share/man/man1`).
 
 If you have [curl](https://curl.haxx.se/) or 
 [wget](https://www.gnu.org/software/wget/), you can (probably)
@@ -58,6 +55,10 @@ following instructions into a bourne shell:
     exit
 )
 ```
+
+This will also try to copy the manual page to `/usr/local/share/man/man1`;
+this is why the system asks you for a password.
+
 
 ## Test suite
 
